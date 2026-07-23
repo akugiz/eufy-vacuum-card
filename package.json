@@ -1,0 +1,11 @@
+{
+  "name": "eufy-vacuum-card",
+  "version": "1.6.0",
+  "description": "A Home Assistant vacuum dashboard card developed and tested with the Eufy Robot Vacuum Omni E28.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check vacuum-robot-menu-card.js",
+    "test": "node tests/card.test.mjs"
+  }
+}
