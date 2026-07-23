@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Eufy Vacuum Card demo</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --primary-text-color: #f5f3ff;
+        --secondary-text-color: #a7a3bd;
+        --card-background-color: #171624;
+        --ha-card-background: #171624;
+        --secondary-background-color: #222132;
+        --divider-color: #343246;
+        --disabled-text-color: #6d697c;
+        --primary-color: #b58cff;
+        --error-color: #ef5f74;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: start center;
+        padding: 24px;
+        background: #0c0b12;
+        color: var(--primary-text-color);
+        font-family: Arial, sans-serif;
+      }
+      vacuum-robot-menu-card { display: block; width: min(760px, 100%); }
+      ha-card { display: block; border-radius: 20px; box-shadow: 0 16px 50px #0008; }
+      ha-icon { display: inline-grid; place-items: center; width: 24px; height: 24px; }
+      ha-icon::after { content: "●"; font-size: 11px; }
+    </style>
+  </head>
+  <body>
+    <vacuum-robot-menu-card id="demo"></vacuum-robot-menu-card>
+    <script type="module" src="../vacuum-robot-menu-card.js"></script>
+    <script type="module">
+      await customElements.whenDefined("vacuum-robot-menu-card");
+      const card = document.querySelector("#demo");
+      const states = {
+        "vacuum.eufy_e28": {
+          state: "cleaning",
+          attributes: {
+            friendly_name: "Eufy E28",
+            battery_level: 100,
+            fan_speed: "max",
+            fan_speed_list: ["quiet", "normal", "strong", "max"],
+          },
+        },
+        "sensor.eufy_e28_water_level": {
+          state: "87",
+          attributes: { friendly_name: "Eufy E28 Water Level", unit_of_measurement: "%" },
+        },
+        "sensor.eufy_e28_dock_status": {
+          state: "idle",
+          attributes: { friendly_name: "Eufy E28 Dock Status" },
+        },
+        "sensor.eufy_e28_cleaning_area": {
+          state: "0",
+          attributes: { friendly_name: "Eufy E28 Cleaning Area", unit_of_measurement: "m²" },
+        },
+        "sensor.eufy_e28_cleaning_time": {
+          state: "0",
+          attributes: { friendly_name: "Eufy E28 Cleaning Time", unit_of_measurement: "min" },
+        },
+        "sensor.eufy_e28_task_status": {
+          state: "completed",
+          attributes: { friendly_name: "Eufy E28 Task Status" },
+        },
+        "sensor.eufy_e28_active_cleaning_target": {
+          state: "Main Floor",
+          attributes: { friendly_name: "Eufy E28 Active Cleaning Target" },
+        },
+        "sensor.eufy_e28_total_cleaning_area": {
+          state: "824",
+          attributes: { friendly_name: "Eufy E28 Total Cleaning Area", unit_of_measurement: "m²" },
+        },
+        "sensor.eufy_e28_total_cleaning_time": {
+          state: "1518",
+          attributes: { friendly_name: "Eufy E28 Total Cleaning Time", unit_of_measurement: "min" },
+        },
+        "sensor.eufy_e28_wifi_signal_strength": {
+          state: "-76",
+          attributes: { friendly_name: "Eufy E28 WiFi Signal Strength", unit_of_measurement: "dBm" },
+        },
+        "image.eufy_e28_map": {
+          state: "2026-07-22T18:00:00+00:00",
+          attributes: {
+            friendly_name: "Eufy E28 Map",
+            entity_picture: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 320'%3E%3Crect width='480' height='320' fill='%232b3542'/%3E%3Cpath d='M35 35h190v110h115V35h105v250H280V180H35z' fill='%2379acd8' stroke='%23e3f2ff' stroke-width='5'/%3E%3Ccircle cx='145' cy='220' r='15' fill='%23b58cff'/%3E%3C/svg%3E",
+          },
+        },
+        "select.eufy_e28_suction_level": {
+          state: "max",
+          attributes: { friendly_name: "Eufy E28 Suction Level", options: ["quiet", "normal", "strong", "max"] },
+        },
+        "select.eufy_e28_cleaning_mode": {
+          state: "vacuum_and_mop",
+          attributes: { friendly_name: "Eufy E28 Cleaning Mode", options: ["vacuum", "vacuum_and_mop", "mop"] },
+        },
+        "select.eufy_e28_scene_task": {
+          state: "None",
+          attributes: {
+            friendly_name: "Eufy E28 Scene/Task",
+            options: ["None", "Main (ID: 7)", "Main 2 (ID: 8)", "Kitchen (ID: 9)"],
+          },
+        },
+        "switch.eufy_e28_auto_empty": {
+          state: "on",
+          attributes: { friendly_name: "Eufy E28 Auto Empty" },
+        },
+        "switch.eufy_e28_child_lock": {
+          state: "off",
+          attributes: { friendly_name: "Eufy E28 Child Lock" },
+        },
+        "button.eufy_e28_empty_dust_bin": {
+          state: "unknown",
+          attributes: { friendly_name: "Eufy E28 Empty Dust Bin" },
+        },
+        "button.eufy_e28_wash_mop": {
+          state: "unknown",
+          attributes: { friendly_name: "Eufy E28 Wash Mop" },
+        },
+        "button.eufy_e28_reset_filter": {
+          state: "unknown",
+          attributes: { friendly_name: "Eufy E28 Reset Filter" },
+        },
+        "button.eufy_e28_start_cleaning": {
+          state: "unknown",
+          attributes: { friendly_name: "Eufy E28 Start Cleaning" },
+        },
+        "script.full_house_clean": {
+          state: "off",
+          attributes: { friendly_name: "Full House Clean Max" },
+        },
+        "script.clean_after_cooking": {
+          state: "off",
+          attributes: { friendly_name: "Clean After Cooking" },
+        },
+      };
+      const deviceEntities = Object.keys(states).filter((id) => !id.startsWith("script."));
+      const registry = deviceEntities.map((entity_id) => ({ entity_id, device_id: "eufy-e28-device" }));
+
+      card.setConfig({
+        entity: "vacuum.eufy_e28",
+        extra_entities: ["script.full_house_clean", "script.clean_after_cooking"],
+        scene_buttons: [
+          { option: "Main (ID: 7)", name: "Main Floor", icon: "mdi:home-floor-1", color: "#ff8800" },
+          { option: "Kitchen (ID: 9)", name: "Kitchen", icon: "mdi:pot-steam-outline", color: "#ef6c9f" },
+        ],
+      });
+      card.hass = {
+        states,
+        entities: Object.fromEntries(registry.map((entry) => [entry.entity_id, entry])),
+        locale: { language: "en-IE" },
+        callService: async () => {},
+        callWS: async (message) =>
+          message.type === "config/entity_registry/list" ? registry : [],
+      };
+    </script>
+  </body>
+</html>
