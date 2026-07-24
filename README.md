@@ -25,6 +25,7 @@ standard Home Assistant vacuum services and related device entities.
 - optional extra scripts and scenes for routines such as Full House Clean;
 - individual show/hide sliders for every entity in every tab;
 - drag-and-drop entity ordering in both discovery modes;
+- configurable List or Grid layout for the Vacuum information section;
 - independent Overview and Controls visibility for the vacuum suction level;
 - automatic or manually selected entities for every tab;
 - visual card editor with switches for every section;
@@ -120,6 +121,7 @@ configuration_entity_mode: automatic
 diagnostics_entity_mode: automatic
 
 initial_tab: overview
+overview_info_layout: list
 show_map: true
 show_quick_controls: true
 show_overview: true
