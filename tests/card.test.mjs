@@ -224,6 +224,10 @@ card._render();
 assert.match(card.shadowRoot.innerHTML, /Child Lock/);
 assert.match(card.shadowRoot.innerHTML, /Cleaning Mode/);
 assert.match(card.shadowRoot.innerHTML, /Reset Filter/);
+const resetFilter = card._entities.find((item) => item.id === "button.eufy_e28_reset_filter");
+const resetFilterHtml = card._renderEntityControl(resetFilter);
+assert.match(resetFilterHtml, /Press/);
+assert.doesNotMatch(resetFilterHtml, /Unknown/);
 
 card._selectedTab = "diagnostics";
 card._render();
