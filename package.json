@@ -1,6 +1,6 @@
 {
   "name": "eufy-vacuum-card",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "A Home Assistant vacuum dashboard card developed and tested with the Eufy Robot Vacuum Omni E28.",
   "private": true,
   "type": "module",
