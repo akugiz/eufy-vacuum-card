@@ -1,12 +1,12 @@
 /*
  * Eufy Vacuum Card for Home Assistant
- * Version 1.6.1
+ * Version 1.7.0
  *
  * A dependency-free Lovelace card that combines a vacuum's status, controls,
  * configuration entities, map, sensors, and diagnostics into one tabbed card.
  */
 
-const CARD_VERSION = "1.6.1";
+const CARD_VERSION = "1.7.0";
 
 const DEFAULTS = Object.freeze({
   title: "",
@@ -33,6 +33,7 @@ const DEFAULTS = Object.freeze({
   diagnostics_entity_order: [],
   hidden_diagnostics_entities: [],
   initial_tab: "overview",
+  overview_info_layout: "list",
   show_map: true,
   show_quick_controls: true,
   show_overview: true,
@@ -208,6 +209,18 @@ class VacuumRobotMenuCard extends HTMLElement {
                 },
               },
             },
+            {
+              name: "overview_info_layout",
+              selector: {
+                select: {
+                  mode: "dropdown",
+                  options: [
+                    { value: "list", label: "List" },
+                    { value: "grid", label: "Grid" },
+                  ],
+                },
+              },
+            },
             { name: "show_map", selector: { boolean: {} } },
             { name: "show_quick_controls", selector: { boolean: {} } },
             { name: "show_overview", selector: { boolean: {} } },
@@ -232,6 +245,7 @@ class VacuumRobotMenuCard extends HTMLElement {
           diagnostics_entity_mode: "Diagnostics entity selection",
           diagnostics_entities: "Entities shown in Diagnostics",
           initial_tab: "Default tab",
+          overview_info_layout: "Vacuum information layout",
           show_map: "Show map",
           show_quick_controls: "Show quick controls",
           show_overview: "Show Overview tab",
@@ -871,7 +885,7 @@ class VacuumRobotMenuCard extends HTMLElement {
       }
       <div class="overview-info">
         <div class="section-title"><ha-icon icon="mdi:information-outline"></ha-icon><strong>Vacuum information</strong></div>
-        <div class="info-grid">
+        <div class="info-grid ${this._config.overview_info_layout === "grid" ? "grid" : "list"}">
           ${
             fanSpeed
               ? this._infoTile("mdi:fan", "Suction level", titleCase(fanSpeed))
@@ -1302,6 +1316,12 @@ class VacuumRobotMenuCard extends HTMLElement {
       .info-tile ha-icon { grid-row: 1 / span 2; color: var(--vacuum-accent); --mdc-icon-size: 19px; }
       .info-tile span { color: var(--secondary-text-color); font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .info-tile strong { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .info-grid.list { grid-template-columns: 1fr; gap: 0; }
+      .info-grid.list .info-tile { min-height: 46px; padding: 8px 4px; border-top: 1px solid var(--divider-color); border-radius: 0; grid-template-columns: auto minmax(0, 1fr) auto; background: transparent; }
+      .info-grid.list .info-tile:first-child { border-top: 0; }
+      .info-grid.list .info-tile ha-icon { grid-row: auto; }
+      .info-grid.list .info-tile span { font-size: 11px; }
+      .info-grid.list .info-tile strong { text-align: right; }
       .empty-state { padding: 18px 10px; border: 1px dashed var(--divider-color); border-radius: 11px; color: var(--secondary-text-color); text-align: center; font-size: 12px; }
       .control-row { min-height: 58px; gap: 10px; padding: 8px 4px; border-top: 1px solid var(--divider-color); }
       .section-title + .control-row { border-top: 0; }
@@ -1760,6 +1780,12 @@ class VacuumRobotMenuCardEditor extends HTMLElement {
                   }>${label}</option>`,
                 )
                 .join("")}
+            </select>
+          </label>
+          <label class="field"><span>Vacuum information layout</span>
+            <select data-field="overview_info_layout">
+              <option value="list" ${this._config.overview_info_layout !== "grid" ? "selected" : ""}>List</option>
+              <option value="grid" ${this._config.overview_info_layout === "grid" ? "selected" : ""}>Grid</option>
             </select>
           </label>
           <div class="display-grid">
