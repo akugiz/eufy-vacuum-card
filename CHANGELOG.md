@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.7.0
+
+- Added List and Grid layouts for the Vacuum information section.
+- Made List the default layout, with one entity per row.
+- Added the layout selector to the visual editor.
+
 ## 1.6.1
 
 - Removed meaningless `Unknown` state subtitles from button controls.
