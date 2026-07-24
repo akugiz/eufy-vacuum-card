@@ -1,12 +1,12 @@
 /*
  * Eufy Vacuum Card for Home Assistant
- * Version 1.6.0
+ * Version 1.6.1
  *
  * A dependency-free Lovelace card that combines a vacuum's status, controls,
  * configuration entities, map, sensors, and diagnostics into one tabbed card.
  */
 
-const CARD_VERSION = "1.6.0";
+const CARD_VERSION = "1.6.1";
 
 const DEFAULTS = Object.freeze({
   title: "",
@@ -1019,9 +1019,13 @@ class VacuumRobotMenuCard extends HTMLElement {
     }
 
     const pressLabel = item.domain === "script" || item.domain === "scene" ? "Run" : "Press";
+    const stateLabel =
+      item.domain === "button"
+        ? ""
+        : `<strong>${escapeHtml(titleCase(current))}</strong>`;
     return `<div class="control-row ${buttonUnavailable && item.domain === "button" ? "unavailable" : ""}">
       <ha-icon icon="${icon}"></ha-icon>
-      <label><span>${escapeHtml(item.label)}</span><strong>${escapeHtml(titleCase(current))}</strong></label>
+      <label><span>${escapeHtml(item.label)}</span>${stateLabel}</label>
       <button class="press" data-entity-press="${escapeHtml(item.id)}" ${
         buttonUnavailable && item.domain === "button" ? "disabled" : ""
       }>${pressLabel}</button>
