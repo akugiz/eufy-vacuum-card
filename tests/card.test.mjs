@@ -169,6 +169,7 @@ assert.match(card.shadowRoot.innerHTML, /Configuration/);
 assert.match(card.shadowRoot.innerHTML, /Diagnostics/);
 assert.match(card.shadowRoot.innerHTML, /image\.eufy_e28_map/);
 assert.match(card.shadowRoot.innerHTML, /Suction level/);
+assert.match(card.shadowRoot.innerHTML, /info-grid list/);
 assert.match(card.shadowRoot.innerHTML, /Main Floor/);
 assert.match(card.shadowRoot.innerHTML, /mdi:home-floor-1/);
 assert.match(card.shadowRoot.innerHTML, /--scene-button-color:#ff8800/);
@@ -178,6 +179,10 @@ assert.doesNotMatch(card.shadowRoot.innerHTML, /Suction level/);
 card._config.hidden_overview_entities = card._config.hidden_overview_entities.filter(
   (entityId) => entityId !== "__vacuum_suction_overview__",
 );
+card._config.overview_info_layout = "grid";
+card._render();
+assert.match(card.shadowRoot.innerHTML, /info-grid grid/);
+card._config.overview_info_layout = "list";
 
 states["vacuum.eufy_e28"].state = "cleaning";
 card._render();
