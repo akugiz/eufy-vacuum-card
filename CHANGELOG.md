@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.1
+
+- Removed meaningless `Unknown` state subtitles from button controls.
+- Button rows now show only their action label, such as `Press`.
+
 ## 1.6.0
 
 - Added drag-and-drop ordering for enabled entities.
