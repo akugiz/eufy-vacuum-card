@@ -11,6 +11,9 @@ Developed and tested with the **Eufy Robot Vacuum Omni E28** through Home
 Assistant. Other vacuum models can also work when their integration exposes
 standard Home Assistant vacuum services and related device entities.
 
+![Eufy Vacuum Card](photo.png)
+![Eufy Vacuum Card](photo2.png)
+
 ## Features
 
 - robot name and live status;
